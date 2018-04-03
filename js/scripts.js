@@ -5,7 +5,8 @@ function Contact(first, last) { //constructor
   this.addresses = []; //array created to store the contact address "object's"
 }
 
-function Address(street, city, state) { //function method creates address objects
+function Address(type, street, city, state) { //function method creates address objects
+  this.type= type;
   this.street = street;
   this.city = city;
   this.state = state;
@@ -16,27 +17,41 @@ Contact.prototype.fullName = function() { //prototype concatinating the first + 
 }
 
 Address.prototype.fullAddress = function() { //prototype concatinating the address details
-  return this.street + ", " + this.city + ", " + this.state;
+  return this.type + ", " + this.street + ", " + this.city + ", " + this.state;
+}
+
+function resetFields() {
+  // $("input#new-first-name").val(""); //emptying out the values for the form
+  // $("input#new-last-name").val("");
+  // $("input#new-type").val("");
+  // $("input.new-street").val("");
+  // $("input.new-city").val("");
+  // $("input.new-state").val("");
+  $("input").val('');
 }
 
 // User Interface Logic
 $(document).ready(function() {
   $("#add-address").click(function() {
-  $("#new-addresses").append('<div class="new-address">' + '<div class="form-group">' +
-                                 '<label for="new-street">Street</label>' +
-                                 '<input type="text" class="form-control new-street">' +
-                               '</div>' +
-                               '<div class="form-group">' +
-                                 '<label for="new-city">City</label>' +
-                                 '<input type="text" class="form-control new-city">' +
-                               '</div>' +
-                               '<div class="form-group">' +
-                                 '<label for="new-state">State</label>' +
-                                 '<input type="text" class="form-control new-state">' +
-                               '</div>' +
-                             '</div>');
-                             //appending new input boxes for additional addresses
-  });
+    $("#new-addresses").append('<div class="new-address">' +
+                                '<div class="form-group">' +
+                                  '<label for="new-type">Street</label>' +
+                                  '<input type="text" class="form-control new-type">' +
+                                    '</div>' +
+                                   '<div class="form-group">' +
+                                     '<label for="new-street">Street</label>' +
+                                     '<input type="text" class="form-control new-street">' +
+                                   '</div>' +
+                                   '<div class="form-group">' +
+                                     '<label for="new-city">City</label>' +
+                                     '<input type="text" class="form-control new-city">' +
+                                   '</div>' +
+                                   '<div class="form-group">' +
+                                     '<label for="new-state">State</label>' +
+                                     '<input type="text" class="form-control new-state">' +
+                                   '</div>' +
+                                 '</div>');
+   });//appending new input boxes for additional addresses
 
   $("form#new-contact").submit(function(event) {
     event.preventDefault();
@@ -46,10 +61,12 @@ $(document).ready(function() {
     var newContact = new Contact(inputtedFirstName, inputtedLastName); //instance created from the contact constructor taking the user inputs
 
     $(".new-address").each(function() { //new function to obtain users address details
+      var inputtedType = $(this).find("input.new-type").val();
       var inputtedStreet = $(this).find("input.new-street").val();
       var inputtedCity = $(this).find("input.new-city").val();
       var inputtedState = $(this).find("input.new-state").val();
-      var newAddress = new Address(inputtedStreet, inputtedCity, inputtedState);
+      var newAddress = new Address(inputtedType, inputtedStreet, inputtedCity, inputtedState);
+      debugger;
       newContact.addresses.push(newAddress); //instance created from the address constructor taking the user inputs
     });
 
@@ -65,11 +82,6 @@ $(document).ready(function() {
         $("ul#addresses").append("<li>" + address.fullAddress() + "</li>"); //calling to the address prototype and append the concatinated object
       });
     });
-
-    $("input#new-first-name").val(""); //emptying out the values for the form
-    $("input#new-last-name").val("");
-    $("input.new-street").val("");
-    $("input.new-city").val("");
-    $("input.new-state").val("");
+  resetFields();
   });
 });
