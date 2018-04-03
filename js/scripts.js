@@ -35,7 +35,7 @@ $(document).ready(function() {
   $("#add-address").click(function() {
     $("#new-addresses").append('<div class="new-address">' +
                                 '<div class="form-group">' +
-                                  '<label for="new-type">Street</label>' +
+                                  '<label for="new-type">Type of Address</label>' +
                                   '<input type="text" class="form-control new-type">' +
                                     '</div>' +
                                    '<div class="form-group">' +
@@ -83,5 +83,6 @@ $(document).ready(function() {
       });
     });
   resetFields();
+  $(".new-address:gt(0)").remove(); //remove anything in the class of .new-address array that is 'gt:greater than' the index of zero and use a remove function to remove those items in the array
   });
 });
