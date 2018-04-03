@@ -56,6 +56,8 @@ $(document).ready(function() {
   $("form#new-contact").submit(function(event) {
     event.preventDefault();
 
+    alert("Thank your for submitting your address!"); //alert for submitting the form
+
     var inputtedFirstName = $("input#new-first-name").val();
     var inputtedLastName = $("input#new-last-name").val();
     var newContact = new Contact(inputtedFirstName, inputtedLastName); //instance created from the contact constructor taking the user inputs
@@ -73,7 +75,6 @@ $(document).ready(function() {
     $("ul#contacts").append("<li><span class='contact'>" + newContact.fullName() + "</span></li>"); //appending to the html document the concatinated object
 
     $(".contact").last().click(function() {
-
       $("#show-contact").show().animate({opacity: '0.7'});
       $("#show-contact h2").text(newContact.fullName());  //referencing the contact prototype
       $(".first-name").text(newContact.firstName);
@@ -81,13 +82,16 @@ $(document).ready(function() {
       $("ul#addresses").text("");
       newContact.addresses.forEach(function(address) {
         $("ul#addresses").append("<li>" + address.fullAddress() + "</li>"); //calling to the address prototype and append the concatinated object
-
       });
-
-      // $("#addresses").fadeOut("slow");
     });
+
   resetFields();
   $(".new-address:gt(0)").slideUp(); //or .remove(); anything in the class of .new-address array that is 'gt:greater than' (a jquery selector) the index of zero and use a remove function to remove those items in the array
 
   });
+
+  // $("#buttonAlert").hover(function(){
+  //   alert("thank your for submitting your address!");
+  // });
+
 });
