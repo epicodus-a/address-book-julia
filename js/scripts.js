@@ -66,23 +66,28 @@ $(document).ready(function() {
       var inputtedCity = $(this).find("input.new-city").val();
       var inputtedState = $(this).find("input.new-state").val();
       var newAddress = new Address(inputtedType, inputtedStreet, inputtedCity, inputtedState);
-      debugger;
+      // debugger;
       newContact.addresses.push(newAddress); //instance created from the address constructor taking the user inputs
     });
 
     $("ul#contacts").append("<li><span class='contact'>" + newContact.fullName() + "</span></li>"); //appending to the html document the concatinated object
 
     $(".contact").last().click(function() {
-      $("#show-contact").show();
+
+      $("#show-contact").show().animate({opacity: '0.7'});
       $("#show-contact h2").text(newContact.fullName());  //referencing the contact prototype
       $(".first-name").text(newContact.firstName);
       $(".last-name").text(newContact.lastName);
       $("ul#addresses").text("");
       newContact.addresses.forEach(function(address) {
         $("ul#addresses").append("<li>" + address.fullAddress() + "</li>"); //calling to the address prototype and append the concatinated object
+
       });
+
+      // $("#addresses").fadeOut("slow");
     });
   resetFields();
-  $(".new-address:gt(0)").remove(); //remove anything in the class of .new-address array that is 'gt:greater than' the index of zero and use a remove function to remove those items in the array
+  $(".new-address:gt(0)").slideUp(); //or .remove(); anything in the class of .new-address array that is 'gt:greater than' (a jquery selector) the index of zero and use a remove function to remove those items in the array
+
   });
 });
